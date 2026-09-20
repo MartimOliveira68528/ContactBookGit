@@ -60,12 +60,35 @@ public class ContactBook {
         contacts[searchIndex(name)].setEmail(email);
     }
 
+    public boolean hasPhone(int phone) {
+        return searchIndexByPhone(phone) >= 0;
+    }
+
+    //Pre: hasPhone(phone)
+    public Contact getContactByPhone(int phone) {
+        return contacts[searchIndexByPhone(phone)];
+    }
+
     private int searchIndex(String name) {
         int i = 0;
         int result = -1;
         boolean found = false;
         while (i<counter && !found)
             if (contacts[i].getName().equals(name))
+                found = true;
+            else
+                i++;
+        if (found) result = i;
+        return result;
+    }
+
+    //Devolve o indice do contacto mais antigo com este numero, ou -1 se nao existir
+    private int searchIndexByPhone(int phone) {
+        int i = 0;
+        int result = -1;
+        boolean found = false;
+        while (i<counter && !found)
+            if (contacts[i].getPhone() == phone)
                 found = true;
             else
                 i++;
